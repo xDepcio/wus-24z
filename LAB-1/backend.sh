@@ -19,4 +19,4 @@ spring.datasource.password=petclinic
 spring.sql.init.mode=always
 EOF
 
-./mvnw spring-boot:run &
+nohup ./mvnw spring-boot:run > out.log 2>&1 &
