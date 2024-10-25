@@ -1,17 +1,24 @@
 #!/bin/bash
 
+FRONTEND_PUBLIC_IP="$1"
+FRONTEND_PORT="80"
+BACKEND_PRIVATE_IP="$2"
+BACKEND_PORT="9966"
+
 sudo apt install nginx -y
 
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
-source ~/.bashrc
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 nvm install 20
 npm install -g @angular/cli@latest
 
 git clone https://github.com/spring-petclinic/spring-petclinic-angular.git
 cd spring-petclinic-angular
 npm install
-sed -i 's/localhost/10.0.0.4/g' src/environments/environment.prod.ts
-ng build --configuration production --base-href=/petclinic/ --deploy-url=/petclinic/
+sed -i "s/localhost/$FRONTEND_PUBLIC_IP/g" src/environments/environment.prod.ts
+sed -i "s/9966/$FRONTEND_PORT/g" src/environments/environment.prod.ts
+yes | ng build --configuration production --base-href=/petclinic/ --deploy-url=/petclinic/
 
 sudo mkdir /usr/share/nginx/html/petclinic
 sudo cp -r ./dist/ /usr/share/nginx/html/petclinic/
@@ -27,7 +34,7 @@ server {
         }
 
         location /petclinic/api/ {
-                proxy_pass http://10.0.0.4:9966/;
+                proxy_pass http://$BACKEND_PRIVATE_IP:$BACKEND_PORT/petclinic/api/;
                 include proxy_params;
         }
 }
