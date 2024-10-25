@@ -1,15 +1,5 @@
 #!/bin/bash
 
-# Backend 10.0.0.4
-ssh azureuser@20.16.244.199 << EOF
-git clone https://github.com/spring-petclinic/spring-petclinic-rest.git
-yes | sudo apt install openjdk-17-jdk openjdk-17-jre
-cd spring-petclinic-rest
-./mvnw spring-boot:run
-EOF
-
-# Frontend 10.0.0.5
-ssh azureuser@front << EOF
 sudo apt install nginx -y
 
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
@@ -25,5 +15,23 @@ ng build --configuration production --base-href=/petclinic/ --deploy-url=/petcli
 
 sudo mkdir /usr/share/nginx/html/petclinic
 sudo cp -r ./dist/ /usr/share/nginx/html/petclinic/
+cat > petclinic.conf << EOF
+server {
+	    listen       80 default_server;
+        root         /usr/share/nginx/html;
+        index index.html;
 
+	    location /petclinic/ {
+                alias /usr/share/nginx/html/petclinic/dist/;
+                try_files \$uri\$args \$uri\$args/ /petclinic/index.html;
+        }
+
+        location /petclinic/api/ {
+                proxy_pass http://10.0.0.4:9966/;
+                include proxy_params;
+        }
+}
 EOF
+sudo mv petclinic.conf /etc/nginx/conf.d/
+sudo rm /etc/nginx/sites-enabled/default
+sudo nginx -s reload

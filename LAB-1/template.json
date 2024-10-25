@@ -2,60 +2,56 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "virtualMachines_ubuntu_vm_1_name": {
-            "defaultValue": "ubuntu-vm-1",
+        "virtualMachines_bd_name": {
+            "defaultValue": "bd",
             "type": "String"
         },
-        "virtualMachines_ubuntu_front_name": {
-            "defaultValue": "ubuntu-front",
+        "virtualMachines_backend_name": {
+            "defaultValue": "backend",
             "type": "String"
         },
-        "virtualMachines_ubuntu_lab_bd_name": {
-            "defaultValue": "ubuntu-lab-bd",
+        "networkInterfaces_bd377_name": {
+            "defaultValue": "bd377",
             "type": "String"
         },
-        "networkInterfaces_ubuntu_vm_1126_name": {
-            "defaultValue": "ubuntu-vm-1126",
+        "publicIPAddresses_bd_ip_name": {
+            "defaultValue": "bd-ip",
             "type": "String"
         },
-        "publicIPAddresses_ubuntu_vm_1_ip_name": {
-            "defaultValue": "ubuntu-vm-1-ip",
+        "virtualMachines_frontend_name": {
+            "defaultValue": "frontend",
             "type": "String"
         },
-        "virtualNetworks_ubuntu_vm_1_vnet_name": {
-            "defaultValue": "ubuntu-vm-1-vnet",
+        "networkInterfaces_backend95_name": {
+            "defaultValue": "backend95",
             "type": "String"
         },
-        "networkInterfaces_ubuntu_front912_name": {
-            "defaultValue": "ubuntu-front912",
+        "networkInterfaces_frontend5_name": {
+            "defaultValue": "frontend5",
             "type": "String"
         },
-        "publicIPAddresses_ubuntu_front_ip_name": {
-            "defaultValue": "ubuntu-front-ip",
+        "networkSecurityGroups_bd_nsg_name": {
+            "defaultValue": "bd-nsg",
             "type": "String"
         },
-        "virtualNetworks_ubuntu_front_vnet_name": {
-            "defaultValue": "ubuntu-front-vnet",
+        "publicIPAddresses_backend_ip_name": {
+            "defaultValue": "backend-ip",
             "type": "String"
         },
-        "networkInterfaces_ubuntu_lab_bd454_name": {
-            "defaultValue": "ubuntu-lab-bd454",
+        "virtualNetworks_backend_vnet_name": {
+            "defaultValue": "backend-vnet",
             "type": "String"
         },
-        "publicIPAddresses_ubuntu_lab_bd_ip_name": {
-            "defaultValue": "ubuntu-lab-bd-ip",
+        "publicIPAddresses_frontend_ip_name": {
+            "defaultValue": "frontend-ip",
             "type": "String"
         },
-        "networkSecurityGroups_ubuntu_vm_1_nsg_name": {
-            "defaultValue": "ubuntu-vm-1-nsg",
+        "networkSecurityGroups_backend_nsg_name": {
+            "defaultValue": "backend-nsg",
             "type": "String"
         },
-        "networkSecurityGroups_ubuntu_front_nsg_name": {
-            "defaultValue": "ubuntu-front-nsg",
-            "type": "String"
-        },
-        "networkSecurityGroups_ubuntu_lab_bd_nsg_name": {
-            "defaultValue": "ubuntu-lab-bd-nsg",
+        "networkSecurityGroups_frontend_nsg_name": {
+            "defaultValue": "frontend-nsg",
             "type": "String"
         }
     },
@@ -64,13 +60,13 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2024-01-01",
-            "name": "[parameters('networkSecurityGroups_ubuntu_front_nsg_name')]",
+            "name": "[parameters('networkSecurityGroups_backend_nsg_name')]",
             "location": "westeurope",
             "properties": {
                 "securityRules": [
                     {
                         "name": "SSH",
-                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('networkSecurityGroups_ubuntu_front_nsg_name'), 'SSH')]",
+                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('networkSecurityGroups_backend_nsg_name'), 'SSH')]",
                         "type": "Microsoft.Network/networkSecurityGroups/securityRules",
                         "properties": {
                             "protocol": "TCP",
@@ -93,13 +89,13 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2024-01-01",
-            "name": "[parameters('networkSecurityGroups_ubuntu_lab_bd_nsg_name')]",
+            "name": "[parameters('networkSecurityGroups_bd_nsg_name')]",
             "location": "westeurope",
             "properties": {
                 "securityRules": [
                     {
                         "name": "SSH",
-                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('networkSecurityGroups_ubuntu_lab_bd_nsg_name'), 'SSH')]",
+                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('networkSecurityGroups_bd_nsg_name'), 'SSH')]",
                         "type": "Microsoft.Network/networkSecurityGroups/securityRules",
                         "properties": {
                             "protocol": "TCP",
@@ -122,13 +118,13 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2024-01-01",
-            "name": "[parameters('networkSecurityGroups_ubuntu_vm_1_nsg_name')]",
+            "name": "[parameters('networkSecurityGroups_frontend_nsg_name')]",
             "location": "westeurope",
             "properties": {
                 "securityRules": [
                     {
                         "name": "SSH",
-                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('networkSecurityGroups_ubuntu_vm_1_nsg_name'), 'SSH')]",
+                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('networkSecurityGroups_frontend_nsg_name'), 'SSH')]",
                         "type": "Microsoft.Network/networkSecurityGroups/securityRules",
                         "properties": {
                             "protocol": "TCP",
@@ -151,14 +147,14 @@
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2024-01-01",
-            "name": "[parameters('publicIPAddresses_ubuntu_front_ip_name')]",
+            "name": "[parameters('publicIPAddresses_backend_ip_name')]",
             "location": "westeurope",
             "sku": {
                 "name": "Standard",
                 "tier": "Regional"
             },
             "properties": {
-                "ipAddress": "20.16.93.104",
+                "ipAddress": "20.16.244.199",
                 "publicIPAddressVersion": "IPv4",
                 "publicIPAllocationMethod": "Static",
                 "idleTimeoutInMinutes": 4,
@@ -168,14 +164,14 @@
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2024-01-01",
-            "name": "[parameters('publicIPAddresses_ubuntu_lab_bd_ip_name')]",
+            "name": "[parameters('publicIPAddresses_bd_ip_name')]",
             "location": "westeurope",
             "sku": {
                 "name": "Standard",
                 "tier": "Regional"
             },
             "properties": {
-                "ipAddress": "135.236.14.255",
+                "ipAddress": "108.142.149.155",
                 "publicIPAddressVersion": "IPv4",
                 "publicIPAllocationMethod": "Static",
                 "idleTimeoutInMinutes": 4,
@@ -185,14 +181,14 @@
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2024-01-01",
-            "name": "[parameters('publicIPAddresses_ubuntu_vm_1_ip_name')]",
+            "name": "[parameters('publicIPAddresses_frontend_ip_name')]",
             "location": "westeurope",
             "sku": {
                 "name": "Standard",
                 "tier": "Regional"
             },
             "properties": {
-                "ipAddress": "20.234.174.135",
+                "ipAddress": "20.16.247.175",
                 "publicIPAddressVersion": "IPv4",
                 "publicIPAllocationMethod": "Static",
                 "idleTimeoutInMinutes": 4,
@@ -202,7 +198,7 @@
         {
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2024-01-01",
-            "name": "[parameters('virtualNetworks_ubuntu_front_vnet_name')]",
+            "name": "[parameters('virtualNetworks_backend_vnet_name')]",
             "location": "westeurope",
             "properties": {
                 "addressSpace": {
@@ -213,35 +209,7 @@
                 "subnets": [
                     {
                         "name": "default",
-                        "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_ubuntu_front_vnet_name'), 'default')]",
-                        "properties": {
-                            "addressPrefix": "10.0.0.0/24",
-                            "delegations": [],
-                            "privateEndpointNetworkPolicies": "Disabled",
-                            "privateLinkServiceNetworkPolicies": "Enabled"
-                        },
-                        "type": "Microsoft.Network/virtualNetworks/subnets"
-                    }
-                ],
-                "virtualNetworkPeerings": [],
-                "enableDdosProtection": false
-            }
-        },
-        {
-            "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2024-01-01",
-            "name": "[parameters('virtualNetworks_ubuntu_vm_1_vnet_name')]",
-            "location": "westeurope",
-            "properties": {
-                "addressSpace": {
-                    "addressPrefixes": [
-                        "10.0.0.0/16"
-                    ]
-                },
-                "subnets": [
-                    {
-                        "name": "default",
-                        "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_ubuntu_vm_1_vnet_name'), 'default')]",
+                        "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_backend_vnet_name'), 'default')]",
                         "properties": {
                             "addressPrefix": "10.0.0.0/24",
                             "delegations": [],
@@ -258,14 +226,14 @@
         {
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2024-07-01",
-            "name": "[parameters('virtualMachines_ubuntu_front_name')]",
+            "name": "[parameters('virtualMachines_backend_name')]",
             "location": "westeurope",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_ubuntu_front912_name'))]"
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_backend95_name'))]"
             ],
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "Standard_B2s"
+                    "vmSize": "Standard_DS1_v2"
                 },
                 "additionalCapabilities": {
                     "hibernationEnabled": false
@@ -279,12 +247,12 @@
                     },
                     "osDisk": {
                         "osType": "Linux",
-                        "name": "[concat(parameters('virtualMachines_ubuntu_front_name'), '_disk1_18be7e33c1324f2da1904387a41ba2df')]",
+                        "name": "[concat(parameters('virtualMachines_backend_name'), '_disk1_bfc96d86cc0e444a94ecf0b24ac1c7b7')]",
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
                             "storageAccountType": "Premium_LRS",
-                            "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('virtualMachines_ubuntu_front_name'), '_disk1_18be7e33c1324f2da1904387a41ba2df'))]"
+                            "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('virtualMachines_backend_name'), '_disk1_bfc96d86cc0e444a94ecf0b24ac1c7b7'))]"
                         },
                         "deleteOption": "Delete",
                         "diskSizeGB": 30
@@ -293,7 +261,7 @@
                     "diskControllerType": "SCSI"
                 },
                 "osProfile": {
-                    "computerName": "[parameters('virtualMachines_ubuntu_front_name')]",
+                    "computerName": "[parameters('virtualMachines_backend_name')]",
                     "adminUsername": "azureuser",
                     "linuxConfiguration": {
                         "disablePasswordAuthentication": true,
@@ -325,9 +293,9 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_ubuntu_front912_name'))]",
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_backend95_name'))]",
                             "properties": {
-                                "deleteOption": "Delete"
+                                "deleteOption": "Detach"
                             }
                         }
                     ]
@@ -342,14 +310,14 @@
         {
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2024-07-01",
-            "name": "[parameters('virtualMachines_ubuntu_lab_bd_name')]",
+            "name": "[parameters('virtualMachines_bd_name')]",
             "location": "westeurope",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_ubuntu_lab_bd454_name'))]"
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_bd377_name'))]"
             ],
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "Standard_B2ls_v2"
+                    "vmSize": "Standard_DS1_v2"
                 },
                 "additionalCapabilities": {
                     "hibernationEnabled": false
@@ -363,12 +331,12 @@
                     },
                     "osDisk": {
                         "osType": "Linux",
-                        "name": "[concat(parameters('virtualMachines_ubuntu_lab_bd_name'), '_OsDisk_1_fb2f9d880ae34b5faf48b5bb593e3725')]",
+                        "name": "[concat(parameters('virtualMachines_bd_name'), '_disk1_27b0e68e35b64506a7a46252452ab085')]",
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
                             "storageAccountType": "Premium_LRS",
-                            "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('virtualMachines_ubuntu_lab_bd_name'), '_OsDisk_1_fb2f9d880ae34b5faf48b5bb593e3725'))]"
+                            "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('virtualMachines_bd_name'), '_disk1_27b0e68e35b64506a7a46252452ab085'))]"
                         },
                         "deleteOption": "Delete",
                         "diskSizeGB": 30
@@ -377,7 +345,7 @@
                     "diskControllerType": "SCSI"
                 },
                 "osProfile": {
-                    "computerName": "[parameters('virtualMachines_ubuntu_lab_bd_name')]",
+                    "computerName": "[parameters('virtualMachines_bd_name')]",
                     "adminUsername": "azureuser",
                     "linuxConfiguration": {
                         "disablePasswordAuthentication": true,
@@ -409,9 +377,9 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_ubuntu_lab_bd454_name'))]",
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_bd377_name'))]",
                             "properties": {
-                                "deleteOption": "Delete"
+                                "deleteOption": "Detach"
                             }
                         }
                     ]
@@ -426,14 +394,14 @@
         {
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2024-07-01",
-            "name": "[parameters('virtualMachines_ubuntu_vm_1_name')]",
+            "name": "[parameters('virtualMachines_frontend_name')]",
             "location": "westeurope",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_ubuntu_vm_1126_name'))]"
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_frontend5_name'))]"
             ],
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "Standard_B2s"
+                    "vmSize": "Standard_DS1_v2"
                 },
                 "additionalCapabilities": {
                     "hibernationEnabled": false
@@ -447,12 +415,12 @@
                     },
                     "osDisk": {
                         "osType": "Linux",
-                        "name": "[concat(parameters('virtualMachines_ubuntu_vm_1_name'), '_disk1_274daf29ad8d4da6a324a46401b93b26')]",
+                        "name": "[concat(parameters('virtualMachines_frontend_name'), '_disk1_4c6655905e464eeeb4d561ec03ba986d')]",
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
                             "storageAccountType": "Premium_LRS",
-                            "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('virtualMachines_ubuntu_vm_1_name'), '_disk1_274daf29ad8d4da6a324a46401b93b26'))]"
+                            "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('virtualMachines_frontend_name'), '_disk1_4c6655905e464eeeb4d561ec03ba986d'))]"
                         },
                         "deleteOption": "Delete",
                         "diskSizeGB": 30
@@ -461,7 +429,7 @@
                     "diskControllerType": "SCSI"
                 },
                 "osProfile": {
-                    "computerName": "[parameters('virtualMachines_ubuntu_vm_1_name')]",
+                    "computerName": "[parameters('virtualMachines_frontend_name')]",
                     "adminUsername": "azureuser",
                     "linuxConfiguration": {
                         "disablePasswordAuthentication": true,
@@ -483,12 +451,19 @@
                     "allowExtensionOperations": true,
                     "requireGuestProvisionSignal": true
                 },
+                "securityProfile": {
+                    "uefiSettings": {
+                        "secureBootEnabled": true,
+                        "vTpmEnabled": true
+                    },
+                    "securityType": "TrustedLaunch"
+                },
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_ubuntu_vm_1126_name'))]",
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_frontend5_name'))]",
                             "properties": {
-                                "deleteOption": "Delete"
+                                "deleteOption": "Detach"
                             }
                         }
                     ]
@@ -503,9 +478,9 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups/securityRules",
             "apiVersion": "2024-01-01",
-            "name": "[concat(parameters('networkSecurityGroups_ubuntu_front_nsg_name'), '/SSH')]",
+            "name": "[concat(parameters('networkSecurityGroups_backend_nsg_name'), '/SSH')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_ubuntu_front_nsg_name'))]"
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_backend_nsg_name'))]"
             ],
             "properties": {
                 "protocol": "TCP",
@@ -525,9 +500,9 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups/securityRules",
             "apiVersion": "2024-01-01",
-            "name": "[concat(parameters('networkSecurityGroups_ubuntu_lab_bd_nsg_name'), '/SSH')]",
+            "name": "[concat(parameters('networkSecurityGroups_bd_nsg_name'), '/SSH')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_ubuntu_lab_bd_nsg_name'))]"
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_bd_nsg_name'))]"
             ],
             "properties": {
                 "protocol": "TCP",
@@ -547,9 +522,9 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups/securityRules",
             "apiVersion": "2024-01-01",
-            "name": "[concat(parameters('networkSecurityGroups_ubuntu_vm_1_nsg_name'), '/SSH')]",
+            "name": "[concat(parameters('networkSecurityGroups_frontend_nsg_name'), '/SSH')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_ubuntu_vm_1_nsg_name'))]"
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_frontend_nsg_name'))]"
             ],
             "properties": {
                 "protocol": "TCP",
@@ -569,23 +544,9 @@
         {
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "apiVersion": "2024-01-01",
-            "name": "[concat(parameters('virtualNetworks_ubuntu_front_vnet_name'), '/default')]",
+            "name": "[concat(parameters('virtualNetworks_backend_vnet_name'), '/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_ubuntu_front_vnet_name'))]"
-            ],
-            "properties": {
-                "addressPrefix": "10.0.0.0/24",
-                "delegations": [],
-                "privateEndpointNetworkPolicies": "Disabled",
-                "privateLinkServiceNetworkPolicies": "Enabled"
-            }
-        },
-        {
-            "type": "Microsoft.Network/virtualNetworks/subnets",
-            "apiVersion": "2024-01-01",
-            "name": "[concat(parameters('virtualNetworks_ubuntu_vm_1_vnet_name'), '/default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_ubuntu_vm_1_vnet_name'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_backend_vnet_name'))]"
             ],
             "properties": {
                 "addressPrefix": "10.0.0.0/24",
@@ -597,79 +558,31 @@
         {
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2024-01-01",
-            "name": "[parameters('networkInterfaces_ubuntu_front912_name')]",
+            "name": "[parameters('networkInterfaces_backend95_name')]",
             "location": "westeurope",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_ubuntu_front_ip_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_ubuntu_front_vnet_name'), 'default')]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_ubuntu_front_nsg_name'))]"
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_backend_ip_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_backend_vnet_name'), 'default')]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_backend_nsg_name'))]"
             ],
             "kind": "Regular",
             "properties": {
                 "ipConfigurations": [
                     {
                         "name": "ipconfig1",
-                        "id": "[concat(resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_ubuntu_front912_name')), '/ipConfigurations/ipconfig1')]",
+                        "id": "[concat(resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_backend95_name')), '/ipConfigurations/ipconfig1')]",
                         "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
                         "properties": {
                             "privateIPAddress": "10.0.0.4",
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_ubuntu_front_ip_name'))]",
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_backend_ip_name'))]",
                                 "properties": {
-                                    "deleteOption": "Delete"
+                                    "deleteOption": "Detach"
                                 }
                             },
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_ubuntu_front_vnet_name'), 'default')]"
-                            },
-                            "primary": true,
-                            "privateIPAddressVersion": "IPv4"
-                        }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": []
-                },
-                "enableAcceleratedNetworking": false,
-                "enableIPForwarding": false,
-                "disableTcpStateTracking": false,
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_ubuntu_front_nsg_name'))]"
-                },
-                "nicType": "Standard",
-                "auxiliaryMode": "None",
-                "auxiliarySku": "None"
-            }
-        },
-        {
-            "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2024-01-01",
-            "name": "[parameters('networkInterfaces_ubuntu_lab_bd454_name')]",
-            "location": "westeurope",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_ubuntu_lab_bd_ip_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_ubuntu_front_vnet_name'), 'default')]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_ubuntu_lab_bd_nsg_name'))]"
-            ],
-            "kind": "Regular",
-            "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                        "id": "[concat(resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_ubuntu_lab_bd454_name')), '/ipConfigurations/ipconfig1')]",
-                        "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
-                        "properties": {
-                            "privateIPAddress": "10.0.0.5",
-                            "privateIPAllocationMethod": "Dynamic",
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_ubuntu_lab_bd_ip_name'))]",
-                                "properties": {
-                                    "deleteOption": "Delete"
-                                }
-                            },
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_ubuntu_front_vnet_name'), 'default')]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_backend_vnet_name'), 'default')]"
                             },
                             "primary": true,
                             "privateIPAddressVersion": "IPv4"
@@ -683,7 +596,7 @@
                 "enableIPForwarding": false,
                 "disableTcpStateTracking": false,
                 "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_ubuntu_lab_bd_nsg_name'))]"
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_backend_nsg_name'))]"
                 },
                 "nicType": "Standard",
                 "auxiliaryMode": "None",
@@ -693,31 +606,31 @@
         {
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2024-01-01",
-            "name": "[parameters('networkInterfaces_ubuntu_vm_1126_name')]",
+            "name": "[parameters('networkInterfaces_bd377_name')]",
             "location": "westeurope",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_ubuntu_vm_1_ip_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_ubuntu_vm_1_vnet_name'), 'default')]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_ubuntu_vm_1_nsg_name'))]"
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_bd_ip_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_backend_vnet_name'), 'default')]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_bd_nsg_name'))]"
             ],
             "kind": "Regular",
             "properties": {
                 "ipConfigurations": [
                     {
                         "name": "ipconfig1",
-                        "id": "[concat(resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_ubuntu_vm_1126_name')), '/ipConfigurations/ipconfig1')]",
+                        "id": "[concat(resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_bd377_name')), '/ipConfigurations/ipconfig1')]",
                         "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
                         "properties": {
-                            "privateIPAddress": "10.0.0.4",
+                            "privateIPAddress": "10.0.0.6",
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_ubuntu_vm_1_ip_name'))]",
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_bd_ip_name'))]",
                                 "properties": {
-                                    "deleteOption": "Delete"
+                                    "deleteOption": "Detach"
                                 }
                             },
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_ubuntu_vm_1_vnet_name'), 'default')]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_backend_vnet_name'), 'default')]"
                             },
                             "primary": true,
                             "privateIPAddressVersion": "IPv4"
@@ -727,11 +640,59 @@
                 "dnsSettings": {
                     "dnsServers": []
                 },
-                "enableAcceleratedNetworking": false,
+                "enableAcceleratedNetworking": true,
                 "enableIPForwarding": false,
                 "disableTcpStateTracking": false,
                 "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_ubuntu_vm_1_nsg_name'))]"
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_bd_nsg_name'))]"
+                },
+                "nicType": "Standard",
+                "auxiliaryMode": "None",
+                "auxiliarySku": "None"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2024-01-01",
+            "name": "[parameters('networkInterfaces_frontend5_name')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_frontend_ip_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_backend_vnet_name'), 'default')]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_frontend_nsg_name'))]"
+            ],
+            "kind": "Regular",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "id": "[concat(resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_frontend5_name')), '/ipConfigurations/ipconfig1')]",
+                        "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+                        "properties": {
+                            "privateIPAddress": "10.0.0.5",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_frontend_ip_name'))]",
+                                "properties": {
+                                    "deleteOption": "Detach"
+                                }
+                            },
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_backend_vnet_name'), 'default')]"
+                            },
+                            "primary": true,
+                            "privateIPAddressVersion": "IPv4"
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableAcceleratedNetworking": true,
+                "enableIPForwarding": false,
+                "disableTcpStateTracking": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_frontend_nsg_name'))]"
                 },
                 "nicType": "Standard",
                 "auxiliaryMode": "None",
