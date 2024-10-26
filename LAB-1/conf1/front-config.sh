@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 FRONTEND_PUBLIC_IP="$1"
 BACKEND_PRIVATE_IP="$2"
 FRONTEND_PORT="$3"

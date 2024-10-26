@@ -73,14 +73,14 @@ while [ $# -gt 0 ]; do
     esac
 done
 
-: ${BACKEND_PORT:=9966}
-: ${DB_PORT:=3306}
-: ${FRONTEND_PORT:=80}
+: "${BACKEND_PORT:=9966}"
+: "${DB_PORT:=3306}"
+: "${FRONTEND_PORT:=80}"
 
 if [ -z "$FRONTEND_PUBLIC_IP" ] || [ -z "$BACKEND_PRIVATE_IP" ] || [ -z "$DB_PRIVATE_IP" ] || [ -z "$BACKEND_PUBLIC_IP" ] || [ -z "$DB_PUBLIC_IP" ] || [ -z "$FRONTEND_PRIVATE_IP" ]; then
     print_help
 fi
 
-cat ./db.sh | ssh azureuser@$DB_PUBLIC_IP "bash -e -s $DB_PORT"
-cat ./backend.sh | ssh azureuser@$BACKEND_PUBLIC_IP "bash -e -s $DB_PRIVATE_IP $DB_PORT"
-cat ./front-config.sh | ssh azureuser@$FRONTEND_PUBLIC_IP "bash -e -s $FRONTEND_PUBLIC_IP $BACKEND_PRIVATE_IP $FRONTEND_PORT $BACKEND_PORT"
+cat ./db.sh | ssh azureuser@$DB_PUBLIC_IP "bash -s $DB_PORT"
+cat ./backend.sh | ssh azureuser@$BACKEND_PUBLIC_IP "bash -s $DB_PRIVATE_IP $DB_PORT"
+cat ./front-config.sh | ssh azureuser@$FRONTEND_PUBLIC_IP "bash -s $FRONTEND_PUBLIC_IP $BACKEND_PRIVATE_IP $FRONTEND_PORT $BACKEND_PORT"

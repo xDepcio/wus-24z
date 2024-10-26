@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 DB_PRIVATE_IP="$1"
 DB_PORT="$2"
 
