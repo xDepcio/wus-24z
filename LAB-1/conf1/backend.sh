@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DB_PRIVATE_IP="$1"
-DB_PORT="3306"
+DB_PORT="$2"
 
 sudo apt update -y
 sudo apt install openjdk-17-jdk openjdk-17-jre -y

@@ -1,9 +1,9 @@
 #!/bin/bash
 
 FRONTEND_PUBLIC_IP="$1"
-FRONTEND_PORT="80"
 BACKEND_PRIVATE_IP="$2"
-BACKEND_PORT="9966"
+FRONTEND_PORT="$3"
+BACKEND_PORT="$4"
 
 sudo apt install nginx -y
 

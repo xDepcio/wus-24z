@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DB_PORT="$1"
+
 sudo apt update -y
 sudo apt install mysql-server -y
 
